@@ -7,15 +7,9 @@ const Category = require("../models/Category");
 //add categroy
 router.post("/add-category", async (req, res) => {
     try {
-        const categoryName = req.body.category.toLowerCase().trim(); 
-  
-        const existingCategory = await Category.findOne({ category: categoryName });
-        
-        if (existingCategory) {
-          return res.status(400).json({ error: "Category already exists" });
-        }
-  
-        const category = new Category({ category: categoryName });
+        const {name, description} = req.body;
+
+        const category = new Category({ name, description });
         await category.save();
   
         res.status(201).json(category);
